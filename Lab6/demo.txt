@@ -1,0 +1,129 @@
+{
+    "name": "Dominos",
+    "location": "New Jersey",
+    "phoneNumber": "201-724-6059",
+    "website": "http://www.dominos.com",
+    "priceRange": "$$$",
+    "cuisines": ["Indian", "Italian", "Mexican"],
+    "serviceOptions":{"dineIn": true, "takeOut": true, "delivery": false}
+}
+
+05d04c85-79a1-491d-9894-efc8dff29cdf
+
+{
+    "title": "Starbucks",
+    "reviewer": "Harshal Vaidya",
+    "rating": 5,
+    "dateOfReview": "10/28/2021",
+    "review": "Amazing place"
+}
+
+1)
+
+with
+maxq as
+(select max.cust as customer,max.quant as max_q,max.cust as max_cust,max.day,max.month,max.year,max.state from (select cust, max(quant) as max_q from sales group by cust) as a
+left join
+(select * from sales) as max
+on max.cust=a.cust and max.quant=a.max_q),
+
+minq as
+(select min.cust as customer,min.quant as min_q,min.cust as min_cust,min.day,min.month,min.year,min.state from (select cust, min(quant) as min_q from sales group by cust) as b
+left join
+(select * from sales) as min
+on min.cust=b.cust and min.quant=b.min_q),	
+
+avgq as
+(select cust, avg(quant) from sales group by cust)
+
+select maxq.customer,maxq.max_q,maxq.max_cust,concat(maxq.month,'/',maxq.day,'/',maxq.year) as max_date,maxq.state,minq.min_q,minq.min_cust,concat(minq.month,'/',minq.day,'/',minq.year) as min_date,minq.state,avgq.avg
+from maxq join minq on maxq.customer=minq.customer join avgq on avgq.cust=maxq.customer
+
+2)
+
+with T1 AS
+(
+	select cust CUSTOMER, prod PRODUCT, max(quant) OCT_MAX
+	from sales
+	where month = 10
+	and year > 2017
+	group by CUSTOMER, PRODUCT
+),
+T2 AS
+(
+	select T1.CUSTOMER, T1.PRODUCT, T1.OCT_MAX, S.date OCT_DATE
+	from T1, sales S
+	where T1.OCT_MAX = S.quant
+	and S.year > 2017
+	and S.month = 10
+	and T1.CUSTOMER = S.cust
+	and T1.PRODUCT = S.prod
+	group by T1.CUSTOMER, T1.PRODUCT, T1.OCT_MAX, OCT_DATE
+),
+T3 AS
+(
+	select min(quant) NOV_MIN
+	from sales
+	where month = 11
+),
+T4 AS
+(
+	select T3.NOV_MIN, S.date NOV_DATE
+	from sales S, T3
+	where T3.NOV_MIN = S.quant
+	and S.month = 11
+	group by T3.NOV_MIN, NOV_DATE
+),
+T5 AS
+(
+	select min(quant) DEC_MIN
+	from sales
+	where month = 12
+),
+T6 AS
+(
+	select T5.DEC_MIN, S.date DEC_DATE
+	from sales S, T5
+	where  T5.DEC_MIN = S.quant
+	and S.month = 12
+	group by T5.DEC_MIN, DEC_DATE
+)
+select T2.CUSTOMER, T2.PRODUCT, T2.OCT_MAX, T2.OCT_DATE, T4.NOV_MIN, T4.NOV_DATE, T6.DEC_MIN, T6.DEC_DATE
+from T2, T4, T6
+group by T2.CUSTOMER, T2.PRODUCT, T2.OCT_MAX, T2.OCT_DATE, T4.NOV_MIN, T4.NOV_DATE, T6.DEC_MIN, T6.DEC_DATE
+
+
+
+3)
+
+with 
+T1 as 
+(
+	select distinct month from sales
+),
+T2 as
+(
+	select T1.month, prod, sum(quant)
+	from T1 left join sales S 
+	on T1.month = S.month 
+	group by T1.month, prod
+), 
+T3 as 
+(
+	select distinct on (month) month, prod, sum 
+	from T2 
+	order by month, sum desc
+), 
+T4 as 
+(
+	select distinct on (month) month, prod, sum 
+	from T2 
+	order by month, sum asc
+)
+select T3.month,
+	   T3.prod as MOST_POPULAR_PROD,
+	   T3.sum as MOST_POP_TOTAL_Q,
+	   T4.prod as LEAST_POPULAR_PROD,
+	   T4.sum as LEAST_POP_TOTAL_Q
+from T3, T4
+where T3.month = T4.month

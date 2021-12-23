@@ -1,0 +1,21 @@
+  <h1>Character Finder</h1>
+  <link rel="stylesheet" href="/public/site.css">
+  <main>
+  <p>This website contains all the information about the Superheroes present in the Marvel Universe. This website is used to find the superheroes by its name or keywords. When you enter any name in the search box, it will return information about all the superheroes present and related to that term.</p>
+  <form action="/search" method="POST" class="new-search-form">
+    <label for='searchTerm'>Search Superhero
+      <input type="text" name="searchTerm" placeholder="Enter superhero name" id="searchTerm" class="full-width-input"/>
+    </label>
+    <button type="submit">Search Superhero</button>
+  </form>
+  </main>
+
+  {{#if hasErrors}}
+  <ul class="error-list">
+    {{#each errors}}
+    <li>
+      <p class='form-error'>{{this}}</p>
+    </li>
+    {{/each}}
+  </ul>
+  {{/if}}

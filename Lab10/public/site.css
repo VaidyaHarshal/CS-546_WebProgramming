@@ -1,0 +1,110 @@
+.error {
+    color: red;
+    background-color: rgb(252, 235, 7);
+    font-weight: bold;
+}
+
+body, html {
+    background-color:#EBECF0;
+}
+
+body, p, input, select, button {
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: -0.2px;
+    font-size: 16px;
+}
+
+form {
+    padding: 16px;
+    width: 16px*20;
+    margin: 0 auto;
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin-bottom: 16px*1.5;
+    width: 100%;
+    text-align:center;
+    font-weight: bold;
+    padding: 12px 10px;
+    font-size: 20px;
+}
+
+#username {
+    border: 2px solid;
+    box-sizing: border-box;
+    border-radius: 4px;
+    width: 300px;
+}
+
+#password {
+    border: 2px solid;
+    box-sizing: border-box;
+    border-radius: 4px;
+    width: 300px;
+}
+
+.segment {
+    padding: 16px;
+    text-align: center;
+}
+
+div {
+    color: black;
+    text-shadow: 1px 1px 1px #FFF;
+  }
+
+button, input {
+    border: 0;
+    outline: 0;
+    font-size: 16px;
+    border-radius: 16px*20;
+    padding: 16px;
+    background-color: #EBECF0;
+    text-shadow: 1px 1px 0 #FFF;
+}
+
+input {
+    margin-right: 16px/2;
+    box-shadow:  inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.2s ease-in-out;
+    appearance: none;
+    -webkit-appearance: none;
+}
+  
+input:focus {
+    box-shadow:  inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF;
+}
+
+button {
+    color:#61677C;
+    font-weight: bold;
+    box-shadow: -5px -5px 20px #FFF,  5px 5px 20px #BABECC;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 10px 20px;
+    display: inline-block;
+}
+
+button:hover {
+    box-shadow: -2px -2px 5px #FFF, 2px 2px 5px #BABECC;
+}
+
+button:active {
+    box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF;
+}
+
+.icon {
+    display: block;
+    width: 100%;
+    color:#AE1100;
+}
+
+.signup {
+    text-align: center;
+}

@@ -1,0 +1,15 @@
+{
+  "name": "lab4",
+  "version": "1.0.0",
+  "description": "My lab4 assignment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Harshal Vaidya 10468204",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^4.1.3"
+  }
+}
